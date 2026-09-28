@@ -78,8 +78,9 @@ You can configure your app by passing the necessary environment variables when s
 Configuration variables common for all services can be found [here](docs/common-envs.md).
 See full list of ENVs and their description inside service directories.
 
-```bash
-docker run -p 8050:8050 --env-file <app.swaggerhub.com/apis/rimrakhimov/EthereumBytecodeDatabase/v2#/SolidityVerifier/SolidityVerifier.proto>ghcr.io/blockscout/{service-name}:latest 
+```shell
+docker run -p 8050:8050 --env-file <app.swaggerhub.com/apis/v2/smart-contract-verifier.proto
+> ghcr.io/blockscout/{bens}:latest 
 ```
 
 Alternatively, you can build your own docker images or compile them directly from sources. 
