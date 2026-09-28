@@ -42,7 +42,7 @@ A set of services used by [Blockscout](https://blockscout.com/) blockchain explo
 
 ## Services
 
-1. [blockscout-ens](blockscout-ens) - indexed data of domain name service for blockscout instances.
+1. [blockscout-ens](blockscout-bens) - indexed data of domain name service for blockscout instances.
 
 2. [da-indexer](da-indexer) - collects blobs from different DA solutions (e.g, Celestia) 
 
@@ -54,7 +54,7 @@ A set of services used by [Blockscout](https://blockscout.com/) blockchain explo
 
 6. [sig-provider](sig-provider/) - aggregator of ethereum signatures for transactions and events
 
-7. [smart-contract-verifier](smart-contract-verifier/) - smart-contracts verification
+7. [smart-contract-verifier](smart-contract-verifier.proto/) - smart-contracts verification
 
 8. [stats](stats) - service designed to calculate and present statistical information from a Blockscout instance
 
@@ -78,8 +78,8 @@ You can configure your app by passing the necessary environment variables when s
 Configuration variables common for all services can be found [here](docs/common-envs.md).
 See full list of ENVs and their description inside service directories.
 
-```shell
-docker run -p 8050:8050 --env-file <path-to-your-env-file> ghcr.io/blockscout/{service-name}:latest 
+```bash
+docker run -p 8050:8050 --env-file <app.swaggerhub.com/apis/rimrakhimov/EthereumBytecodeDatabase/v2#/SolidityVerifier/SolidityVerifier.proto>ghcr.io/blockscout/{service-name}:latest 
 ```
 
 Alternatively, you can build your own docker images or compile them directly from sources. 
