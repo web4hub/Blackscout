@@ -5,7 +5,7 @@ on:
     tags:
       - 'bens/v*'
     paths:
-      - blockscout-ens/**
+      - blockscout/**
       - .github/workflows/bens.yml
       - .github/actions/deps/**
   pull_request:
@@ -22,12 +22,12 @@ env:
 
 defaults:
   run:
-    working-directory: blockscout-ens
+    working-directory: blockscout
 
 jobs:
   test:
     name: Unit, doc and integration tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04-arm
     services:
       postgres:
         image: postgres
@@ -43,7 +43,7 @@ jobs:
           - 5432:5432
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install deps
         uses: ./.github/actions/deps
@@ -118,12 +118,12 @@ jobs:
       (needs.test.result == 'success' || needs.test.result == 'cancelled') &&
       (needs.lint.result == 'success' || needs.lint.result == 'cancelled')
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     outputs:
       semver: ${{ steps.regex.outputs.group2 }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - uses: actions-ecosystem/action-regex-match@v2
         id: regex
@@ -157,10 +157,10 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: "blockscout-ens"
-          file: "blockscout-ens/Dockerfile"
+          context: "blockscout"
+          file: "blockscout/Dockerfile"
           build-contexts: |
-            proto=proto
+            proto=smart-contract-verifier.proto
           push: ${{ steps.tags_extractor.outputs.tags != '' }}
           tags: ${{ steps.tags_extractor.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -171,8 +171,8 @@ jobs:
     name: Publish types package
     uses: './.github/workflows/npm-publisher.yml'
     needs: push
-    if: needs.push.outputs.semver != ''
+    if: context.push.outputs.semver != ''
     secrets: inherit
     with:
       version: ${{ needs.push.outputs.semver }}
-      project_name: blockscout-ens
+      project_name: blockscout
